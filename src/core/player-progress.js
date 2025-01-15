@@ -19,6 +19,10 @@ export class PlayerProgress {
     return this._player.records?.fullGameCompletions > 0;
   }
 
+  get isOuterUnlocked() {
+    return new Decimal(this._player.outers).gt(0);
+  }
+
   static get current() {
     return new PlayerProgress(player);
   }
@@ -49,6 +53,10 @@ export class PlayerProgress {
 
   static realityUnlocked() {
     return PlayerProgress.current.isRealityUnlocked;
+  }
+
+  static outerUnlocked() {
+    return PlayerProgress.current.isOuterUnlocked;
   }
 
   static seenAlteredSpeed() {

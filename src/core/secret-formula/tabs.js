@@ -177,7 +177,7 @@ export const tabs = [
     name: "Automation",
     id: 4,
     hideAt: 2.1,
-    condition: () => player.records.totalAntimatter.gte(1e40),
+    condition: () => player.records.totalAntimatter.gte(1e40) || PlayerProgress.outerUnlocked(),
     hidable: true,
     subtabs: [
       {
@@ -193,7 +193,7 @@ export const tabs = [
         name: "Automator",
         symbol: "<i class='fas fa-code'></i>",
         component: "AutomatorTab",
-        condition: () => PlayerProgress.realityUnlocked(),
+        condition: () => PlayerProgress.realityUnlocked() || PlayerProgress.outerUnlocked(),
         id: 1,
         hidable: true,
       },
@@ -496,6 +496,46 @@ export const tabs = [
         id: 0,
         hidable: true
       }
+    ]
+  },
+  {
+    key: "outer",
+    name: "Outer",
+    UIClass: "o-tab-btn--outer",
+    hideAt: 2.8,
+    condition: () => true,
+    id: 11,
+    hidable: true,
+    subtabs: [
+      {
+        key: "outerFragment",
+        name: "Bugs",
+        symbol: "",
+        hideAt: 2.8,
+        component: "OuterFragmentTab",
+        id: 0,
+        hidable: true
+      },
+      // {
+      //   key: "token",
+      //   name: "Token of Recognition",
+      //   symbol: "",
+      //   hideAt: 2.8,
+      //   component: "TokenTab",
+      //   id: 2,
+      //   hidable: true,
+      //   condition: () => OuterTeresaUnlocks.spaceShard.isUnlocked
+      // },
+      // {
+      //  key: "mimicEye",
+      //   name: "The Mimic Of The Eye",
+      //   symbol: "⊚",
+      //   hideAt: 2.8,
+      //   component: "MimicEyeTab",
+      //   id: 4,
+      //   hidable: true,
+      //   condition: () => OuterTeresa.isRunning && player.outer.MimicEye.TeresaUnlocked
+      // }
     ]
   }
 ];

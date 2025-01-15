@@ -934,6 +934,15 @@ export function simulateTime(seconds, real, fast) {
   EventHub.dispatch(GAME_EVENT.OFFLINE_CURRENCY_GAINED);
 
   let remainingRealSeconds = seconds;
+
+
+  // If (PlayerProgress.outerUnlocked()) {
+  //   const nbbug = Decimal.round(remainingRealSeconds / 500);
+  //   console.log(nbbug);
+  //   for (let i = 0; i < nbbug; i++) {
+  //     OuterBug();
+  //   }
+  // }
   // During async code the number of ticks remaining can go down suddenly
   // from "Speed up" which means tick length needs to go up, and thus
   // you can't just divide total time by total ticks to get tick length.

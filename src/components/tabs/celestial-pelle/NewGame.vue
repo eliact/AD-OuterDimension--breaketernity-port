@@ -25,7 +25,7 @@ export default {
       this.selectedSetName = GlyphAppearanceHandler.chosenFromModal?.name ?? "None (will choose randomly)";
     },
     startNewGame() {
-      NG.startNewGame();
+      OG.startNewGame();
     },
     openSelectionModal() {
       Modal.cosmeticSetChoice.show();
@@ -40,8 +40,7 @@ export default {
     :style="style"
   >
     <h2>
-      Reset the entire game, but keep Automator Scripts, Study Presets, Secret Themes, Secret Achievements, Options,
-      and Companion Glyph.
+      Now that you know the truth, you could try to change your fate and their fate.
     </h2>
     <h3>You can use the button in the top-right to view the game as it is right now.</h3>
     <div class="c-new-game-button-container">
@@ -49,7 +48,7 @@ export default {
         class="c-new-game-button"
         @click="startNewGame"
       >
-        Start over?
+        Try again?
       </button>
     </div>
     <br>

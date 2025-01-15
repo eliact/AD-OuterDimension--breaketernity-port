@@ -1,5 +1,7 @@
+/* eslint-disable complexity */
 import { DC } from "../constants";
 import { GameMechanicState } from "../game-mechanics";
+
 import { SteamRuntime } from "@/steam";
 
 class AchievementState extends GameMechanicState {
@@ -30,6 +32,10 @@ class AchievementState extends GameMechanicState {
 
   get isPrePelle() {
     return this.row < 18;
+  }
+
+  get isPreOuter() {
+    return this.row < 19;
   }
 
   get isUnlocked() {
@@ -110,6 +116,13 @@ export const Achievements = {
     return Achievements.all.filter(ach => ach.isPrePelle);
   },
 
+  /**
+   * @type {AchievementState[]}
+   */
+  get preOuter() {
+    return Achievements.all.filter(ach => ach.isPreOuter);
+  },
+
   get allRows() {
     const count = Achievements.all.map(a => a.row).nMax();
     return Achievements.rows(1, count);
@@ -122,6 +135,11 @@ export const Achievements = {
 
   get prePelleRows() {
     const count = Achievements.prePelle.map(a => a.row).nMax();
+    return Achievements.rows(1, count);
+  },
+
+  get preOuterRows() {
+    const count = Achievements.preOuter.map(a => a.row).max();
     return Achievements.rows(1, count);
   },
 
@@ -138,30 +156,58 @@ export const Achievements = {
     return GameCache.achievementPeriod.value;
   },
 
+  get OuterPeriod() {
+    if (!Achievements.preReality.every(a => a.isUnlocked)) return TimeSpan.fromMinutes(180).totalMilliseconds;
+    return TimeSpan.fromMinutes(540).totalMilliseconds;
+  },
+
   autoAchieveUpdate(diff) {
     if (!PlayerProgress.realityUnlocked()) return;
-    if (!player.reality.autoAchieve || RealityUpgrade(8).isLockingMechanics) {
-      player.reality.achTimer = Decimal.clampMax(player.reality.achTimer.add(diff), this.period);
+    if (!player.reality.autoAchieve || RealityUpgrade(8).isLockingMechanics || !PlayerProgress.outerUnlocked()) {
+      // eslint-disable-next-line no-unused-expressions
+      player.outers > 0
+        ? player.reality.achTimer = Decimal.clampMax(player.reality.achTimer.add(diff), this.OuterPeriod)
+        : player.reality.achTimer = Decimal.clampMax(player.reality.achTimer.add(diff), this.period);
       return;
     }
     if (Achievements.preReality.every(a => a.isUnlocked)) return;
 
-    player.reality.achTimer = player.reality.achTimer.add(diff);
-    if (player.reality.achTimer.lt(this.period)) return;
+    if (PlayerProgress.outerUnlocked()) {
+      if (Achievements.preOuter.every(a => a.isUnlocked)) return;
+    } else if (Achievements.preOuter.every(a => a.isUnlocked)) return;
 
-    for (const achievement of Achievements.preReality.filter(a => !a.isUnlocked)) {
-      achievement.unlock(true);
-      player.reality.achTimer = player.reality.achTimer.sub(this.period);
-      if (player.reality.achTimer.lt(this.period)) break;
+    player.reality.achTimer = player.reality.achTimer.add(diff);
+    // eslint-disable-next-line max-len
+    if (((PlayerProgress.outerUnlocked() && player.reality.achTimer.lt(this.OuterPeriod) && !PlayerProgress.realityUnlocked()) ||
+     // eslint-disable-next-line max-len
+     (PlayerProgress.outerUnlocked() && Perk.achievementGroup5.isBought && player.reality.achTimer.lt(this.OuterPeriod))) ||
+     (player.reality.achTimer.lt(this.period) && PlayerProgress.realityUnlocked())) return;
+
+    // eslint-disable-next-line max-len
+    if ((PlayerProgress.outerUnlocked() && !PlayerProgress.realityUnlocked()) || (PlayerProgress.outerUnlocked() && Perk.achievementGroup5.isBought)) {
+      for (const achievements of Achievements.preOuter.filter(a => !a.isUnlocked)) {
+        achievements.unlock(true);
+        player.reality.achTimer = player.reality.achTimer.sub(this.OuterPeriod);
+        if (player.reality.achTimer.lt(this.OuterPeriod)) break;
+      }
+    } else {
+      for (const achievement of Achievements.preReality.filter(a => !a.isUnlocked)) {
+        achievement.unlock(true);
+        player.reality.achTimer = player.reality.achTimer.sub(this.period);
+        if (player.reality.achTimer.lt(this.period)) break;
+      }
     }
     player.reality.gainedAutoAchievements = true;
   },
 
   get timeToNextAutoAchieve() {
-    if (!PlayerProgress.realityUnlocked()) return DC.D0;
-    if (GameCache.achievementPeriod.value.eq(0)) return DC.D0;
-    if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return DC.D0;
-    return this.period.sub(player.reality.achTimer);
+    if (!PlayerProgress.realityUnlocked() && !PlayerProgress.outerUnlocked()) return DC.D0;
+    if (GameCache.achievementPeriod.value.eq(0) && !PlayerProgress.outerUnlocked()) return DC.D0;
+    if (PlayerProgress.outerUnlocked()) {
+      if (Achievements.all.countWhere(a => !a.isUnlocked) === 0) return DC.D0;
+    } else if (Achievements.preReality.countWhere(a => !a.isUnlocked) === 0) return DC.D0;
+    return PlayerProgress.outerUnlocked() ? this.OuterPeriod.sub(player.reality.achTimer)
+      : this.period.sub(player.reality.achTimer);
   },
 
   _power: new Lazy(() => {

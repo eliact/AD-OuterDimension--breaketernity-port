@@ -104,6 +104,10 @@ html {
 
   --color-pelle--base: crimson;
   --color-pelle--secondary: #00bcd4;
+
+  --color-theEye--base: #1b95f9e2;
+  --color-outerteresa--base: #7851ec;
+  --color-outereffarig--base: #f0503b;
 }
 
 :root .t-metro,
@@ -752,6 +756,16 @@ button:focus {
 
 .o-tab-btn--celestial:hover {
   background: var(--color-celestials);
+}
+
+.o-tab-btn--outer {
+  color: #2196f3;
+  background-color: var(--color-prestige--accent);
+  border-color: #2196f3;
+}
+
+.o-tab-btn--outer:hover {
+  background: #2196f3;
 }
 
 /* #endregion tab buttons */
@@ -5717,6 +5731,11 @@ kbd {
   border-color: black;
 }
 
+.o-notification--outer {
+  background-color: #2196f3;
+  border-color: #2196f3;
+}
+
 .s-base--metro .o-notification--success {
   background-color: #ffeb3b;
   border-color: #f9a825;
@@ -8209,6 +8228,44 @@ kbd {
 }
 
 /* #endregion laitela tab */
+
+/* #startregion outer-fragment tab */
+
+.l-outer-fragment-tab {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.l-outer-fragment-tab--inner {
+  display: flex;
+}
+
+.l-outer-fragment-container {
+  display: block;
+  margin: 0.5rem;
+  padding: 0.5rem;
+  border: var(--var-border-width, 0.2rem) solid #2196f3;
+  border-radius: var(--var-border-radius, 0.5rem);
+}
+
+.l-outer-fragment-layer {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.l-outer-fragment-bug {
+  height: 10rem;
+  font-size: 1.5rem;
+}
+
+.l-outer-fragment-SuperBug {
+  height: 10rem;
+  font-size: 1.5rem;
+  color: #2196f3;
+}
+
+/* #endregion outer-fragment tab */
 
 .c-performance-stats {
   width: 25rem;

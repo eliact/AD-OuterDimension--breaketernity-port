@@ -15,7 +15,8 @@ export const tabNotifications = {
     ],
     condition: () => !PlayerProgress.realityUnlocked() &&
       !PlayerProgress.eternityUnlocked() &&
-      !PlayerProgress.infinityUnlocked(),
+      !PlayerProgress.infinityUnlocked() &&
+      !PlayerProgress.outerUnlocked(),
     events: [GAME_EVENT.BIG_CRUNCH_BEFORE]
   },
   breakInfinity: {
@@ -27,7 +28,7 @@ export const tabNotifications = {
       }
     ],
     condition: () => !PlayerProgress.realityUnlocked() &&
-      !PlayerProgress.eternityUnlocked() && Autobuyer.bigCrunch.hasMaxedInterval
+      !PlayerProgress.eternityUnlocked() && Autobuyer.bigCrunch.hasMaxedInterval && !PlayerProgress.outerUnlocked(),
   },
   IDUnlock: {
     id: 2,
@@ -38,7 +39,7 @@ export const tabNotifications = {
       }
     ],
     condition: () => !PlayerProgress.realityUnlocked() &&
-      !PlayerProgress.eternityUnlocked() && !InfinityDimension(2).isUnlocked
+      !PlayerProgress.eternityUnlocked() && !InfinityDimension(2).isUnlocked && !PlayerProgress.outerUnlocked()
   },
   ICUnlock: {
     id: 3,
@@ -49,7 +50,7 @@ export const tabNotifications = {
       }
     ],
     condition: () => !PlayerProgress.realityUnlocked() &&
-      !PlayerProgress.eternityUnlocked()
+      !PlayerProgress.eternityUnlocked() && !PlayerProgress.outerUnlocked
   },
   replicanti: {
     id: 4,
@@ -60,7 +61,7 @@ export const tabNotifications = {
       }
     ],
     condition: () => !PlayerProgress.realityUnlocked() &&
-      !PlayerProgress.eternityUnlocked() && Currency.infinityPoints.gte(DC.E140),
+      !PlayerProgress.eternityUnlocked() && Currency.infinityPoints.gte(DC.E140) && !PlayerProgress.outerUnlocked(),
     events: [GAME_EVENT.BIG_CRUNCH_AFTER]
   },
   firstEternity: {
@@ -84,7 +85,7 @@ export const tabNotifications = {
       }
     ],
     condition: () => !PlayerProgress.realityUnlocked() &&
-      !PlayerProgress.eternityUnlocked(),
+      !PlayerProgress.eternityUnlocked() && !PlayerProgress.outerUnlocked(),
     events: [GAME_EVENT.ETERNITY_RESET_BEFORE]
   },
   dilationAfterUnlock: {
@@ -95,7 +96,7 @@ export const tabNotifications = {
         tab: "dilation"
       }
     ],
-    condition: () => !PlayerProgress.realityUnlocked()
+    condition: () => !PlayerProgress.realityUnlocked() && !PlayerProgress.outerUnlocked()
   },
   realityUnlock: {
     id: 7,
@@ -105,7 +106,8 @@ export const tabNotifications = {
         tab: "studies"
       }
     ],
-    condition: () => !PlayerProgress.realityUnlocked() && TimeStudy.reality.canBeBought,
+    condition: () => !PlayerProgress.realityUnlocked() && TimeStudy.reality.canBeBought &&
+     !PlayerProgress.outerUnlocked(),
     events: [GAME_EVENT.ETERNITY_RESET_AFTER, GAME_EVENT.SAVE_CONVERTED_FROM_PREVIOUS_VERSION,
       GAME_EVENT.OFFLINE_CURRENCY_GAINED, GAME_EVENT.ACHIEVEMENT_UNLOCKED]
   },

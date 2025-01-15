@@ -206,6 +206,7 @@ export const Tabs = (function() {
       Tab.eternity,
       Tab.reality,
       Tab.celestials,
+      Tab.outer
     ],
     newUI: [
       Tab.dimensions,
@@ -215,9 +216,10 @@ export const Tabs = (function() {
       Tab.eternity,
       Tab.reality,
       Tab.celestials,
+      Tab.outer,
       Tab.achievements,
       Tab.statistics,
-      Tab.options,
+      Tab.options
     ],
     get currentUIFormat() {
       return ui.view.newUI ? this.newUI : this.oldUI;

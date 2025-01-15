@@ -13,7 +13,7 @@ export class TickspeedAutobuyerState extends UpgradeableAutobuyerState {
 
   get isUnlocked() {
     if (Pelle.isDisabled("tickspeedAutobuyer")) return false;
-    return this.canBeUpgraded;
+    return this.canBeUpgraded || PlayerProgress.outerUnlocked();
   }
 
   get canBeUpgraded() {

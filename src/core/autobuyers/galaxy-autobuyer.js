@@ -13,7 +13,7 @@ export class GalaxyAutobuyerState extends UpgradeableAutobuyerState {
 
   get isUnlocked() {
     if (Pelle.isDisabled("galaxyAutobuyer")) return false;
-    return this.canBeUpgraded;
+    return this.canBeUpgraded || PlayerProgress.outerUnlocked();
   }
 
   get canBeUpgraded() {

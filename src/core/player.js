@@ -465,6 +465,7 @@ window.player = {
             score: 0,
             effectCount: 0,
             specifiedMask: [],
+            // eslint-disable-next-line max-len
             effectScores: [...Array(GlyphInfo[t].effectIDs.length).keys()].mapToObject(e => GlyphInfo[t].effectIDs[e], () => 0),
           })),
       },
@@ -928,6 +929,18 @@ window.player = {
       id: false,
     }
   },
+  outers: 0,
+  bugs: 0,
+  bug: {
+    Anti: 0,
+    Inf: 0,
+    Break: 0,
+    Rep: 0,
+    Eter: 0,
+    Dila: 0,
+    Real: 0,
+    Super: 0
+  }
 };
 
 export const Player = {
@@ -997,7 +1010,8 @@ export const Player = {
   },
 
   get automatorUnlocked() {
-    return AutomatorPoints.totalPoints >= AutomatorPoints.pointsForAutomator || player.reality.automator.forceUnlock;
+    return AutomatorPoints.totalPoints >= AutomatorPoints.pointsForAutomator || player.reality.automator.forceUnlock ||
+     PlayerProgress.outerUnlocked();
   },
 
   resetRequirements(key) {

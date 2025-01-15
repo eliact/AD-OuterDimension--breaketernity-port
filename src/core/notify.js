@@ -41,6 +41,7 @@ export const notify = (function() {
     automator: (text, duration) => showNotification(text, "o-notification--automator", duration),
     blackHole: (text, duration) => showNotification(text, "o-notification--black-hole", duration),
     strike: (text, duration) => showNotification(text, "o-notification--strike", duration),
+    outer: (text, duration) => showNotification(text, "o-notification--outer", duration),
     showBlackHoles: true
   };
 }());

@@ -23,25 +23,25 @@ export const dilationTimeStudies = [
     id: 2,
     description: "Unlock the 5th Time Dimension",
     cost: DC.E6,
-    requirement: () => PlayerProgress.dilationUnlocked()
+    requirement: () => PlayerProgress.dilationUnlocked() || PlayerProgress.outerUnlocked()
   },
   {
     id: 3,
     description: "Unlock the 6th Time Dimension",
     cost: DC.E7,
-    requirement: () => TimeStudy.timeDimension(5).isBought
+    requirement: () => TimeStudy.timeDimension(5).isBought || PlayerProgress.outerUnlocked()
   },
   {
     id: 4,
     description: "Unlock the 7th Time Dimension",
     cost: DC.E8,
-    requirement: () => TimeStudy.timeDimension(6).isBought
+    requirement: () => TimeStudy.timeDimension(6).isBought || PlayerProgress.outerUnlocked()
   },
   {
     id: 5,
     description: "Unlock the 8th Time Dimension",
     cost: DC.E9,
-    requirement: () => TimeStudy.timeDimension(7).isBought
+    requirement: () => TimeStudy.timeDimension(7).isBought || PlayerProgress.outerUnlocked()
   },
   {
     id: 6,

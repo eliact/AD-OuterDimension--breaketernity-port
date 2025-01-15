@@ -25,7 +25,7 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
 
   get isUnlocked() {
     if (Pelle.isDisabled(`antimatterDimAutobuyer${this.tier}`)) return false;
-    return this.data.isBought || this.canBeUpgraded;
+    return this.data.isBought || this.canBeUpgraded || PlayerProgress.outerUnlocked();
   }
 
   get isBought() {
@@ -143,7 +143,8 @@ export class AntimatterDimensionAutobuyerState extends UpgradeableAutobuyerState
 
   reset() {
     super.reset();
-    if (EternityMilestone.keepAutobuyers.isReached || PelleUpgrade.keepAutobuyers.canBeApplied) return;
+    if (EternityMilestone.keepAutobuyers.isReached || PelleUpgrade.keepAutobuyers.canBeApplied ||
+     PlayerProgress.outerUnlocked()) return;
     this.data.isUnlocked = false;
     this.data.isBought = false;
     this.data.bulk = 1;
